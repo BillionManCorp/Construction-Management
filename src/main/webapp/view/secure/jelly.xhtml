@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+	<title>Add Jelly Details</title>
+</h:head>
+<ui:include src="/view/secure/header.xhtml"></ui:include>
+<h:form id="jelly">
+	<p:layout style="min-width:1000px;min-height:500px;margin:auto;">
+		<p:layoutUnit position="west" resizable="true" size="100" minSize="40"
+			maxSize="200" style="min-width:240px;">
+			<ui:include src="/view/secure/sideMenu.xhtml"></ui:include>
+		</p:layoutUnit>
+		<p:layoutUnit position="center">
+			<h2 style="font-weight: bolder; font-style: italic; color: #000000;"
+				align="center">Jelly Details</h2>
+			<div align="center" style="margin-top: 1cm;">
+				<p:panelGrid columns="2" layout="grid"
+					style="width:800px;height:300px;">
+					<h:outputText value="#{msg['label.type']}" />
+					<h:selectOneMenu
+						value="#{materialsController.jellyDetails.jellyType}"
+						required="true">
+						<f:selectItem itemLabel="12mm" itemValue="12"></f:selectItem>
+						<f:selectItem itemLabel="20mm" itemValue="20"></f:selectItem>
+						<f:selectItem itemLabel="40mm" itemValue="40"></f:selectItem>
+					</h:selectOneMenu>
+
+					<h:outputLabel value="Quantity(in ">ft<sup>3</sup>):</h:outputLabel>
+					<h:inputText value="#{materialsController.jellyDetails.quantity}"
+						id="jellyQty" required="true" />
+
+					<h:outputText value="Amount:" />
+					<h:inputText value="#{materialsController.jellyDetails.amount}"
+						id="jellyAmt" required="true" />
+
+					<h:outputText value="Project:" />
+					<p:selectOneMenu
+						value="#{materialsController.jellyDetails.project}">
+						<f:selectItems value="#{materialsController.projectList}"
+							var="pro" itemLabel="#{pro.projectName}" itemValue="#{pro.id}"
+							required="true">
+						</f:selectItems>
+					</p:selectOneMenu>
+				</p:panelGrid>
+				<p:panelGrid columns="3" style="margin-top:1cm;">
+					<p:commandButton value="Reset" id="reset1" ajax="false" />
+					<p:commandButton value="Save" id="save"
+						action="#{materialsController.saveJellyDetails}" ajax="false" />
+					<p:commandButton value="Cancel" id="cancel" ajax="false"
+						action="#{materialsController.cancel}" />
+				</p:panelGrid>
+			</div>
+		</p:layoutUnit>
+	</p:layout>
+
+</h:form>
+</html>

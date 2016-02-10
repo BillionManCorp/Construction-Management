@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+	<title>Add User</title>
+</h:head>
+<ui:include src="/view/secure/header.xhtml"></ui:include>
+<h:form id="jelly">
+	<p:layout style="min-width:1000px;min-height:500px;margin:auto;">
+		<p:layoutUnit position="west" resizable="true" size="100" minSize="40"
+			maxSize="200" style="min-width:240px;">
+			<ui:include src="/view/secure/sideMenu.xhtml"></ui:include>
+		</p:layoutUnit>
+		<p:layoutUnit position="center">
+			<h2 style="font-weight: bolder; font-style: italic; color: #000000;"
+				align="center">User Details</h2>
+			<div align="center" style="margin-top: 1cm;">
+				<p:panelGrid columns="2" layout="grid"
+					style="width:800px;height:300px;">
+					<h:outputLabel value="User Id:"></h:outputLabel>
+					<h:inputText value="#{loginController.addNewUser.userName}"
+						id="userId" required="true" maxlength="6"/>
+
+					<h:outputLabel value="Full Name:"></h:outputLabel>
+					<h:inputText value="#{loginController.addNewUser.fullName}"
+						id="userName" required="true" />
+
+					<h:outputText value="Permission Type:" />
+					<h:selectOneMenu value="#{loginController.addRoles.userRole}"
+						required="true">
+						<f:selectItem itemLabel="User" itemValue="ROLE_USER"></f:selectItem>
+						<f:selectItem itemLabel="Admin" itemValue="ROLE_ADMIN"></f:selectItem>
+					</h:selectOneMenu>
+
+					<h:outputLabel value="Email:"></h:outputLabel>
+					<h:inputText value="#{loginController.addNewUser.email}"
+						id="email" required="true" />
+
+					<h:outputLabel value="Mobile:"></h:outputLabel>
+					<h:inputText value="#{loginController.addNewUser.mobileNumber}"
+						id="mobile" required="true" maxlength="10"
+						converter="javax.faces.Number" />
+				</p:panelGrid>
+				<p:panelGrid columns="3" style="margin-top:1cm;">
+					<p:commandButton value="Reset" id="reset1" ajax="false" />
+					<p:commandButton value="Save" id="save"
+						action="#{loginController.saveNewUser}" ajax="false" />
+					<p:commandButton value="Cancel" id="cancel" ajax="false"
+						action="#{loginController.cancel}" />
+				</p:panelGrid>
+			</div>
+		</p:layoutUnit>
+	</p:layout>
+
+</h:form>
+</html>

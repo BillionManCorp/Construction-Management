@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+	<title>Add Vehicle Details</title>
+	<script>
+		function func1() {
+			document.getElementById('vehicle:fuelType').disabled = true;
+			document.getElementById('vehicle:spareName').disabled = true;
+		}
+		window.onload = func1;
+
+		function changeType(type) {
+			if (type == 2) {
+				document.getElementById('vehicle:fuelType').disabled = true;
+				document.getElementById('vehicle:spareName').disabled = false;
+			} else {
+				document.getElementById('vehicle:spareName').disabled = true;
+				document.getElementById('vehicle:fuelType').disabled = false;
+			}
+		}
+	</script>
+</h:head>
+<ui:include src="/view/secure/header.xhtml"></ui:include>
+<h:form id="vehicle">
+	<p:layout style="min-width:1000px;min-height:500px;margin:auto;">
+		<p:layoutUnit position="west" resizable="true" size="100" minSize="40"
+			maxSize="200" style="min-width:240px;">
+			<ui:include src="/view/secure/sideMenu.xhtml"></ui:include>
+		</p:layoutUnit>
+		<p:layoutUnit position="center">
+			<h2 style="font-weight: bolder; font-style: italic; color: #000000;"
+				align="center">Vehicle Details</h2>
+			<div align="center" style="margin-top: 1cm; display: inherit;">
+				<p:panelGrid columns="2" layout="grid"
+					style="width:800px;height:300px;">
+					<h:outputText value="Vehicle Type:" />
+					<h:selectOneMenu
+						value="#{materialsController.newVehicleDetails.vehicleType}">
+						<f:selectItem itemLabel="Lorry" itemValue="1"></f:selectItem>
+						<f:selectItem itemLabel="Tractor" itemValue="2"></f:selectItem>
+						<f:selectItem itemLabel="Hitachi" itemValue="3"></f:selectItem>
+						<f:selectItem itemLabel="JCB" itemValue="4"></f:selectItem>
+						<f:selectItem itemLabel="Road Roller" itemValue="5"></f:selectItem>
+						<f:selectItem itemLabel="Car" itemValue="6"></f:selectItem>
+						<f:selectItem itemLabel="Mixture" itemValue="7"></f:selectItem>
+						<f:selectItem itemLabel="Bike" itemValue="8"></f:selectItem>
+						<f:selectItem itemLabel="Bus Travelling" itemValue="9"></f:selectItem>
+						<f:selectItem itemLabel="Tipper" itemValue="10"></f:selectItem>
+					</h:selectOneMenu>
+					<h:outputText value="Type:" />
+					<p:selectOneRadio onchange="changeType(this.value)"
+						value="#{materialsController.newVehicleDetails.spareOrFuel}">
+						<f:selectItem itemValue="1" itemLabel="Fuel"></f:selectItem>
+						<f:selectItem itemValue="2" itemLabel="Spare Parts"></f:selectItem>
+					</p:selectOneRadio>
+					<h:outputText value="Fuel Type" id="fuelTypeLabel"></h:outputText>
+					<h:selectOneMenu id="fuelType" required="true"
+						value="#{materialsController.newVehicleDetails.fuelType}">
+						<f:selectItem itemLabel="Petrol" itemValue="1"></f:selectItem>
+						<f:selectItem itemLabel="Oil" itemValue="2"></f:selectItem>
+						<f:selectItem itemLabel="Grease" itemValue="3"></f:selectItem>
+						<f:selectItem itemLabel="Gas" itemValue="4"></f:selectItem>
+						<f:selectItem itemLabel="Waste Oil" itemValue="5"></f:selectItem>
+						<f:selectItem itemLabel="Diesel" itemValue="6"></f:selectItem>
+					</h:selectOneMenu>
+					<h:outputText value="Spare Name" id="spareLabel"></h:outputText>
+					<h:inputText id="spareName"
+						value="#{materialsController.newVehicleDetails.spareName}"></h:inputText>
+
+					<h:outputText value="Amount(in Rs):" />
+					<h:inputText
+						value="#{materialsController.newVehicleDetails.amount}" />
+
+					<h:outputText value="Project:" />
+					<p:selectOneMenu
+						value="#{materialsController.newVehicleDetails.project}">
+						<f:selectItems value="#{materialsController.projectList}"
+							var="pro" itemLabel="#{pro.projectName}" itemValue="#{pro.id}">
+						</f:selectItems>
+					</p:selectOneMenu>
+				</p:panelGrid>
+				<p:panelGrid columns="3" style="margin-top:1cm;">
+					<p:commandButton value="Reset" id="reset1" ajax="false" />
+					<p:commandButton value="Save" id="save"
+						action="#{materialsController.saveVehicleDetails}" ajax="false" />
+					<p:commandButton value="Cancel" id="cancel" ajax="false"
+						action="#{materialsController.cancel}" />
+				</p:panelGrid>
+			</div>
+		</p:layoutUnit>
+	</p:layout>
+</h:form>
+</html>
+

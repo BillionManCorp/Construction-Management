@@ -1,0 +1,35 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-configuration PUBLIC
+    "-//Hibernate/Hibernate Configuration DTD//EN"
+    "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+
+<hibernate-configuration>
+	<session-factory>
+		<mapping class="com.billionman.model.Project" />
+		<mapping class="com.billionman.model.Steel" />
+		<mapping class="com.billionman.model.Cement" />
+		<mapping class="com.billionman.model.Sand" />
+		<mapping class="com.billionman.model.Vehicle" />
+		<mapping class="com.billionman.model.VehicleType" />
+		<mapping class="com.billionman.model.Power" />
+		<mapping class="com.billionman.model.Jelly" />
+		<mapping class="com.billionman.model.Water" />
+		<mapping class="com.billionman.model.Wood" />
+		<mapping class="com.billionman.model.Centering" />
+		<mapping class="com.billionman.model.SizeStone" />
+		<mapping class="com.billionman.model.Boulders" />
+		<mapping class="com.billionman.model.Bricks" />
+		<mapping class="com.billionman.model.GroupDoors" />
+		<mapping class="com.billionman.model.LimeRendering" />
+		<mapping class="com.billionman.model.Plastering" />
+		<mapping class="com.billionman.model.Tiles" />
+		<mapping class="com.billionman.model.Painting" />
+		<mapping class="com.billionman.model.Plumbing" />
+		<mapping class="com.billionman.model.Sanitary" />
+		<mapping class="com.billionman.model.Grill" />
+		<mapping class="com.billionman.model.User" />
+		<mapping class="com.billionman.model.UserRoles" />
+
+
+	</session-factory>
+</hibernate-configuration>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<title>BillionMan Corp.</title>
+</head>
+<h:form id="login" prependId="false">
+	<h2 style="text-align: center; font-weight: bold;">Welcome To
+		BillionMan Corp.</h2>
+	<div align="center" style="margin-top: 3cm; display: block;" >
+		<h:panelGrid columns="2">
+			<h:outputLabel value="User ID" for="username"></h:outputLabel>
+			<h:inputText value="#{loginModel.userName}" id="username"></h:inputText>
+			<h:outputLabel value="Password" for="password"></h:outputLabel>
+			<h:inputSecret value="#{loginModel.password}" id="password"></h:inputSecret>
+			<h:commandButton value="Login" action="#{loginController.userLogin}"
+				ajax="false"></h:commandButton>
+			<p:selectBooleanCheckbox value="${mySwitch}" ng-model="mySwitch"></p:selectBooleanCheckbox>	
+		</h:panelGrid>
+		<h:message showDetail="true" showSummary="true" for="login" id="error"></h:message>
+	</div>
+</h:form>
+</html>

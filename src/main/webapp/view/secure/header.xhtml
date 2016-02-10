@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<!-- 	<link rel="stylesheet" type="text/css" href="/ConstructionManagement/faces/view/js/styles.css" /> -->
+</h:head>
+<h:form>
+	<div align="right">
+		<h:outputLabel value="Logged in As "></h:outputLabel>
+		<h:outputText value="#{loginModel.userName}" style="font-weight:bold"></h:outputText>
+		<h:commandLink action="#{loginController.logout}" style="color:blue;">Logout</h:commandLink>
+	</div>
+	<div>
+		<h1
+			style="color: navy; font-weight: bold; font-style: inherit; left: auto;"
+			align="center">Contractor Management</h1>
+	</div>
+</h:form>
+</html>

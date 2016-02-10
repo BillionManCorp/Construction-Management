@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head>
+</h:head>
+<p:dataTable id="tblLabour" var="labour"
+	rendered="#{reportController.materialsModel.selectedMaterial=='LABOURS'}"
+	value="#{reportController.laboursList}" paginator="true" rows="20"
+	style="margin-bottom:20px">
+
+	<p:column>
+		<f:facet name="header">
+			<h:outputText value="#{msg['label.amount']}" />
+		</f:facet>
+		<h:outputText value="#{labour.amount}" />
+	</p:column>
+
+	<p:column>
+		<f:facet name="header">
+			<h:outputText value="#{msg['label.description']}" />
+		</f:facet>
+		<h:outputText value="#{labour.description}" />
+	</p:column>
+
+	<p:column>
+		<f:facet name="header">
+			<h:outputText value="#{msg['label.date']}" />
+		</f:facet>
+		<h:outputText value="#{labour.addedDate}" />
+	</p:column>
+
+	<p:column>
+		<f:facet name="header">
+			<h:outputText value="Edit/Delete" />
+			<h:outputText value="&#160;" />
+			<p:commandButton icon="ui-icon-plus"
+				action="#{materialsController.addLabourDetails}"></p:commandButton>
+		</f:facet>
+		<p:commandButton icon="ui-icon-close"
+			action="#{reportController.deleteLabours}">
+			<f:setPropertyActionListener value="#{doors}"
+				target="#{reportController.selectedLaboursModel}" />
+		</p:commandButton>
+		<p:commandButton icon="ui-icon-pencil" title="View"
+			update=":labourDialog:tableData" oncomplete="PF('dlgLabour').show();">
+			<f:setPropertyActionListener value="#{doors}"
+				target="#{reportController.selectedLaboursModel}" />
+		</p:commandButton>
+	</p:column>
+
+</p:dataTable>
+</html>

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+	<title>Create Project</title>
+</h:head>
+<ui:include src="/view/secure/header.xhtml"></ui:include>
+<h:form>
+	<p:messages autoUpdate="true" showDetail="true" showSummary="true"></p:messages>
+	<p:layout style="min-width:500px;min-height:50px;margin:auto;">
+		<p:layoutUnit position="west" resizable="true" size="100" minSize="40"
+			maxSize="200" style="min-width:180px;">
+			<ui:include src="/view/secure/sideMenu.xhtml"></ui:include>
+		</p:layoutUnit>
+		<p:layoutUnit position="center">
+			<h2 style="font-weight: bold; color: #000000" align="center">Create
+				New Project</h2>
+			<div align="left"
+				style="margin-left: 10cm; margin-top: 3cm; display: block;">
+				<h:panelGrid columns="2" cellpadding="3">
+					<h:outputLabel value="Project Name: " style="font-weight: bold;"></h:outputLabel>
+					<h:inputText value="#{createProjectController.projName}"></h:inputText>
+					<h:outputLabel value="Place: " style="font-weight: bold;"></h:outputLabel>
+					<h:inputText value="#{createProjectController.place}"></h:inputText>
+					<h:outputLabel value="Start Date: " style="font-weight: bold;"></h:outputLabel>
+					<p:calendar value="#{createProjectController.startDate}"
+						pattern="dd.MM.yyyy" />
+					<h:outputLabel value="Prioject Type: " style="font-weight: bold;"></h:outputLabel>
+					<h:selectOneMenu value="#{createProjectController.type}">
+						<f:selectItem itemValue="1" itemLabel="Road"></f:selectItem>
+						<f:selectItem itemValue="2" itemLabel="Building"></f:selectItem>
+					</h:selectOneMenu>
+					<h:outputLabel value="Cost: " style="font-weight: bold;"></h:outputLabel>
+					<h:inputText value="#{createProjectController.estimatedCost}"></h:inputText>
+				</h:panelGrid>
+				<div align="left"
+					style="margin-top: 0.5cm; margin-left: 4cm; display: block;">
+					<h:commandButton value="Reset"></h:commandButton>
+					<h:commandButton value="Save"
+						action="#{createProjectController.createNewProject}"></h:commandButton>
+					<h:commandButton value="Cancel"
+						action="#{createProjectController.cancelCreateProject}"></h:commandButton>
+				</div>
+			</div>
+		</p:layoutUnit>
+	</p:layout>
+</h:form>
+</html>

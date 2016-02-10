@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head>
+</h:head>
+<!-- <h:form id="bricks"> -->
+<p:dataTable id="tbl" var="brick" value="#{reportController.bricksList}"
+	rendered="#{reportController.materialsModel.selectedMaterial=='BRICKS'}"
+	paginator="true" rows="20" style="margin-bottom:20px">
+
+	<p:column>
+		<f:facet name="header">
+			<h:outputText value="#{msg['label.quantity.nos']}" />
+		</f:facet>
+		<h:outputText value="#{brick.quantity}" />
+	</p:column>
+
+	<p:column>
+		<f:facet name="header">
+			<h:outputText value="#{msg['label.amount']}" />
+		</f:facet>
+		<h:outputText value="#{brick.amount}" />
+	</p:column>
+
+	<p:column>
+		<f:facet name="header">
+			<h:outputText value="#{msg['label.date']}" />
+		</f:facet>
+		<h:outputText value="#{brick.addedDate}" />
+	</p:column>
+
+	<p:column>
+		<f:facet name="header">
+			<h:outputText value="Edit/Delete" />
+			<h:outputText value="&#160;" />
+			<p:commandButton icon="ui-icon-plus"
+				action="#{materialsController.addBrickDetails}"></p:commandButton>
+		</f:facet>
+		<p:commandButton icon="ui-icon-close"
+			action="#{reportController.deleteBricks}">
+			<f:setPropertyActionListener value="#{brick}"
+				target="#{reportController.brickDetails}" />
+		</p:commandButton>
+		<p:commandButton icon="ui-icon-pencil" title="View"
+			update=":bricksDialog:tableData" oncomplete="PF('dlg1').show();">
+			<f:setPropertyActionListener value="#{brick}"
+				target="#{reportController.brickDetails}" />
+		</p:commandButton>
+	</p:column>
+</p:dataTable>
+</html>

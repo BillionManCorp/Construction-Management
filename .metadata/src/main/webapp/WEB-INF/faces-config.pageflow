@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pageflow:Pageflow xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pageflow="http://www.sybase.com/suade/pageflow" id="pf14468405378000" configfile="/ConstructionManagement/src/main/webapp/WEB-INF/faces-config.xml">
+  <nodes xsi:type="pageflow:PFPage" name="view/secure/dashboard.xhtml" x="338" y="381" id="pf14468737420211" referenceLink="//@navigationRule.3/@navigationCase.1/@toViewId|" outlinks="pf14468737420212 pf14468737420213 pf14468737420214 pf14468737420215 pf144700693597249" inlinks="pf14468737420227 pf14468737420228 pf14468737420229 pf144687374202210 pf14472473445548" path="/view/secure/dashboard.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="view/secure/newProject.xhtml" x="122" y="178" id="pf144687374202212" referenceLink="//@navigationRule.2/@fromViewId|" outlinks="pf14468737420229 pf144687374202210 pf144687374202213" inlinks="pf14468737420212" path="/view/secure/newProject.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="view/secure/fetch.xhtml" x="554" y="1756" id="pf144687374202214" referenceLink="//@navigationRule.3/@navigationCase.3/@toViewId|" inlinks="pf14468737420213 pf14472473445549" path="/view/secure/fetch.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="view/secure/materials.xhtml" x="554" y="3495" id="pf144687374202216" referenceLink="//@navigationRule.3/@navigationCase.6/@toViewId|" inlinks="pf14468737420214 pf144687374202220 pf144687374202221 pf144687374202222 pf144687374202223 pf144687374202224 pf144687374202225 pf144687374202226 pf144724734455410 pf144724734455411 pf144724734455412" path="/view/secure/materials.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="view/secure/addUser.xhtml" x="122" y="562" id="pf144687374202227" referenceLink="//@navigationRule.1/@fromViewId|" outlinks="pf14468737420227 pf144687374202228 pf14468737420228" inlinks="pf14468737420215" path="/view/secure/addUser.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="view/login.xhtml" x="554" y="772" id="pf144687374202229" referenceLink="//@navigationRule.3/@navigationCase.4/@toViewId|" inlinks="pf144687374202213 pf144687374202231 pf144724734455413" path="/view/login.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="view/403page.xhtml" x="338" y="765" id="pf144687374202232" referenceLink="//@navigationRule.3/@navigationCase.0/@toViewId|" inlinks="pf144687374202228 pf144724734455414" path="/view/403page.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="*" x="122" y="3879" id="pf144687374202234" referenceLink="//@navigationRule.3/@fromViewId|" outlinks="pf144700678045827 pf144700678045828 pf144700678045829 pf144700678045830 pf144700678045831 pf144700678045832 pf144700678045833 pf144700678045834 pf144700678045835 pf144700678045836 pf144700678045837 pf144700678045838 pf144700678045839 pf144700678045840 pf144724734455414 pf14472473445548 pf144724734455410 pf14472473445549 pf144724734455413 pf144724734455411 pf144724734455412 pf144724734455415" path="*"/>
+  <nodes xsi:type="pageflow:PFPage" name="view/secure/steel.xhtml" x="338" y="1959" id="pf144687374202251" referenceLink="//@navigationRule.6/@fromViewId|" outlinks="pf144687374202221 pf144687374202222 pf144687374202231" inlinks="pf144700678045827" path="/view/secure/steel.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="view/secure/cement.xhtml" x="338" y="2343" id="pf144687374202252" referenceLink="//@navigationRule.7/@fromViewId|" outlinks="pf144687374202223" inlinks="pf144700678045828" path="/view/secure/cement.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="view/secure/sand.xhtml" x="338" y="2727" id="pf144687374202253" referenceLink="//@navigationRule.5/@fromViewId|" outlinks="pf144687374202220" inlinks="pf144700678045829" path="/view/secure/sand.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="view/secure/vehicle.xhtml" x="338" y="3111" id="pf144687374202254" referenceLink="//@navigationRule.8/@fromViewId|" outlinks="pf144687374202224" inlinks="pf144700678045830" path="/view/secure/vehicle.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="view/secure/power.xhtml" x="338" y="3495" id="pf144687374202255" referenceLink="//@navigationRule.9/@fromViewId|" outlinks="pf144687374202225" inlinks="pf144700678045831" path="/view/secure/power.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="view/secure/jelly.xhtml" x="338" y="3879" id="pf144687374202256" referenceLink="//@navigationRule.10/@fromViewId|" outlinks="pf144687374202226" inlinks="pf144700678045832" path="/view/secure/jelly.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="view/secure/report.xhtml" id="pf14470062853363" referenceLink="//@navigationRule.3/@navigationCase.7/@toViewId|" inlinks="pf144700693597249 pf144724734455415" path="/view/secure/report.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="view/secure/materials/water.xhtml" id="pf144700678045841" referenceLink="//@navigationRule.4/@navigationCase.6/@toViewId|" inlinks="pf144700678045833" path="/view/secure/materials/water.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="view/secure/materials/wood.xhtml" id="pf144700678045842" referenceLink="//@navigationRule.4/@navigationCase.7/@toViewId|" inlinks="pf144700678045834" path="/view/secure/materials/wood.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="view/secure/materials/centering.xhtml" id="pf144700678045843" referenceLink="//@navigationRule.4/@navigationCase.8/@toViewId|" inlinks="pf144700678045835" path="/view/secure/materials/centering.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="view/secure/materials/bricks.xhtml" id="pf144700678045844" referenceLink="//@navigationRule.4/@navigationCase.9/@toViewId|" inlinks="pf144700678045836" path="/view/secure/materials/bricks.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="view/secure/materials/grill.xhtml" id="pf144700678045845" referenceLink="//@navigationRule.4/@navigationCase.10/@toViewId|" inlinks="pf144700678045837" path="/view/secure/materials/grill.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="view/secure/materials/labour.xhtml" id="pf144700678045846" referenceLink="//@navigationRule.4/@navigationCase.11/@toViewId|" inlinks="pf144700678045838" path="/view/secure/materials/labour.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="view/secure/materials/doors.xhtml" id="pf144700678045847" referenceLink="//@navigationRule.4/@navigationCase.12/@toViewId|" inlinks="pf144700678045839" path="/view/secure/materials/doors.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="view/secure/others.xhtml" id="pf144700678045848" referenceLink="//@navigationRule.4/@navigationCase.13/@toViewId|" inlinks="pf144700678045840" path="/view/secure/others.xhtml"/>
+  <links id="pf14468737420212" target="pf144687374202212" source="pf14468737420211" outcome="new" redirect="true"/>
+  <links id="pf14468737420213" target="pf144687374202214" source="pf14468737420211" outcome="fetch" redirect="true"/>
+  <links id="pf14468737420214" target="pf144687374202216" source="pf14468737420211" outcome="materials" redirect="true"/>
+  <links id="pf14468737420215" target="pf144687374202227" source="pf14468737420211" outcome="user" redirect="true"/>
+  <links id="pf14468737420227" target="pf14468737420211" source="pf144687374202227" outcome="saved" redirect="true"/>
+  <links id="pf144687374202228" target="pf144687374202232" source="pf144687374202227" outcome="failed" redirect="true"/>
+  <links id="pf14468737420228" target="pf14468737420211" source="pf144687374202227" outcome="cancel" redirect="true"/>
+  <links id="pf14468737420229" target="pf14468737420211" source="pf144687374202212" outcome="success" redirect="true"/>
+  <links id="pf144687374202210" target="pf14468737420211" source="pf144687374202212" outcome="cancel"/>
+  <links id="pf144687374202213" target="pf144687374202229" source="pf144687374202212" redirect="true"/>
+  <links id="pf144687374202220" target="pf144687374202216" source="pf144687374202253" outcome="success"/>
+  <links id="pf144687374202221" target="pf144687374202216" source="pf144687374202251" outcome="success" redirect="true"/>
+  <links id="pf144687374202222" target="pf144687374202216" source="pf144687374202251" outcome="cancel" redirect="true"/>
+  <links id="pf144687374202231" target="pf144687374202229" source="pf144687374202251" redirect="true"/>
+  <links id="pf144687374202223" target="pf144687374202216" source="pf144687374202252" outcome="success"/>
+  <links id="pf144687374202224" target="pf144687374202216" source="pf144687374202254" outcome="success"/>
+  <links id="pf144687374202225" target="pf144687374202216" source="pf144687374202255" outcome="success"/>
+  <links id="pf144687374202226" target="pf144687374202216" source="pf144687374202256" outcome="success"/>
+  <links id="pf144700678045827" target="pf144687374202251" source="pf144687374202234" outcome="steel" redirect="true"/>
+  <links id="pf144700678045828" target="pf144687374202252" source="pf144687374202234" outcome="cement" redirect="true"/>
+  <links id="pf144700678045829" target="pf144687374202253" source="pf144687374202234" outcome="sand" redirect="true"/>
+  <links id="pf144700678045830" target="pf144687374202254" source="pf144687374202234" outcome="vehicle" redirect="true"/>
+  <links id="pf144700678045831" target="pf144687374202255" source="pf144687374202234" outcome="power" redirect="true"/>
+  <links id="pf144700678045832" target="pf144687374202256" source="pf144687374202234" outcome="jelly" redirect="true"/>
+  <links id="pf144700678045833" target="pf144700678045841" source="pf144687374202234" outcome="water" redirect="true"/>
+  <links id="pf144700678045834" target="pf144700678045842" source="pf144687374202234" outcome="wood" redirect="true"/>
+  <links id="pf144700678045835" target="pf144700678045843" source="pf144687374202234" outcome="centering" redirect="true"/>
+  <links id="pf144700678045836" target="pf144700678045844" source="pf144687374202234" outcome="brick" redirect="true"/>
+  <links id="pf144700678045837" target="pf144700678045845" source="pf144687374202234" outcome="grill" redirect="true"/>
+  <links id="pf144700678045838" target="pf144700678045846" source="pf144687374202234" outcome="labour" redirect="true"/>
+  <links id="pf144700678045839" target="pf144700678045847" source="pf144687374202234" outcome="doors" redirect="true"/>
+  <links id="pf144700678045840" target="pf144700678045848" source="pf144687374202234" outcome="others" redirect="true"/>
+  <links id="pf144700693597249" target="pf14470062853363" source="pf14468737420211" outcome="user" redirect="true"/>
+  <links id="pf144724734455414" target="pf144687374202232" source="pf144687374202234" outcome="sessionFail" redirect="true"/>
+  <links id="pf14472473445548" target="pf14468737420211" source="pf144687374202234" outcome="home" redirect="true"/>
+  <links id="pf144724734455410" target="pf144687374202216" source="pf144687374202234" outcome="materials" redirect="true"/>
+  <links id="pf14472473445549" target="pf144687374202214" source="pf144687374202234" outcome="fetch" redirect="true"/>
+  <links id="pf144724734455413" target="pf144687374202229" source="pf144687374202234" outcome="loggedout" redirect="true"/>
+  <links id="pf144724734455411" target="pf144687374202216" source="pf144687374202234" outcome="cancel" redirect="true"/>
+  <links id="pf144724734455412" target="pf144687374202216" source="pf144687374202234" outcome="saved" redirect="true"/>
+  <links id="pf144724734455415" target="pf14470062853363" source="pf144687374202234" outcome="report" redirect="true"/>
+</pageflow:Pageflow>

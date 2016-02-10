@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+	<title>Materials</title>
+	<style>
+#container {
+	width: 800px;
+	margin: auto;
+	margin-top: 3cm;
+	float: top;
+	height: 700px;
+}
+
+#first {
+	width: 200px;
+	float: left;
+	height: 200px;
+}
+
+#second {
+	width: 200px;
+	float: left;
+	height: 200px;
+}
+
+#third {
+	width: 200px;
+	float: left;
+	height: 200px;
+}
+</style>
+</h:head>
+<ui:include src="/view/secure/header.xhtml"></ui:include>
+<h:form>
+	<p:layout style="min-width:1000px;min-height:600px;margin:auto;">
+		<p:layoutUnit position="west" resizable="true" size="100" minSize="40"
+			maxSize="200" style="min-width:240px;">
+			<ui:include src="/view/secure/sideMenu.xhtml"></ui:include>
+		</p:layoutUnit>
+		<p:layoutUnit position="center">
+
+			<div class="ui-grid ui-grid-responsive" style="margin-top: 1cm;">
+				<div class="ui-grid-row" style="font-weight: bold;">
+					<div class="ui-grid-col-2">
+						<h:commandLink action="#{materialsController.addSteelDetails}">Steel</h:commandLink>
+					</div>
+					<div class="ui-grid-col-2">
+						<h:commandLink action="#{materialsController.addCementDetails}">Cement</h:commandLink>
+					</div>
+					<div class="ui-grid-col-2">
+						<h:commandLink action="#{materialsController.addSandDetails}">Sand</h:commandLink>
+					</div>
+					<div class="ui-grid-col-2">
+						<h:commandLink action="#{materialsController.addVehicleDetails}">Vehicle</h:commandLink>
+					</div>
+					<div class="ui-grid-col-2">
+						<h:commandLink action="#{materialsController.addPowerDetails}">Electricity And Generator</h:commandLink>
+					</div>
+					<div class="ui-grid-col-2">
+						<h:commandLink action="#{materialsController.addJellyDetails}">Jelly</h:commandLink>
+					</div>
+				</div>
+
+				<div class="ui-grid-row" style="font-weight: bold; margin-top: 1cm;">
+					<div class="ui-grid-col-2">
+						<h:commandLink action="#{materialsController.addWaterDetails}">#{msg['label.materials.water']}</h:commandLink>
+					</div>
+					<div class="ui-grid-col-2">
+						<h:commandLink action="#{materialsController.addBrickDetails}">#{msg['label.materials.bricks']}</h:commandLink>
+					</div>
+					<div class="ui-grid-col-2">
+						<h:commandLink action="#{materialsController.addWoodDetails}">#{msg['label.materials.wood']}</h:commandLink>
+					</div>
+					<div class="ui-grid-col-2">
+						<h:commandLink action="#{materialsController.addCenteringDetails}">#{msg['label.materials.centering']}</h:commandLink>
+					</div>
+					<div class="ui-grid-col-2">
+						<h:commandLink action="#{materialsController.addPaintingDetails}">#{msg['label.materials.painting']}</h:commandLink>
+					</div>
+					<div class="ui-grid-col-2">
+						<h:commandLink action="#{materialsController.addPlumbingDetails}">#{msg['label.materials.plumbing']}</h:commandLink>
+					</div>
+				</div>
+
+				<div class="ui-grid-row" style="font-weight: bold; margin-top: 1cm;">
+					<div class="ui-grid-col-2">
+						<h:commandLink action="#{materialsController.addSteelDetails}">Size Stone</h:commandLink>
+					</div>
+					<div class="ui-grid-col-2">
+						<h:commandLink action="#{materialsController.addCementDetails}">Tiles</h:commandLink>
+					</div>
+					<div class="ui-grid-col-2">
+						<h:commandLink action="#{materialsController.addSandDetails}">Sanitary</h:commandLink>
+					</div>
+					<div class="ui-grid-col-2">
+						<h:commandLink action="#{materialsController.addVehicleDetails}">Labour</h:commandLink>
+					</div>
+					<div class="ui-grid-col-2">
+						<h:commandLink action="#{materialsController.addPowerDetails}">Grill</h:commandLink>
+					</div>
+					<div class="ui-grid-col-2">
+						<h:commandLink action="#{materialsController.addJellyDetails}">Plastering Mesh</h:commandLink>
+					</div>
+				</div>
+
+				<div class="ui-grid-row" style="font-weight: bold; margin-top: 1cm;">
+					<div class="ui-grid-col-2">
+						<h:commandLink action="#{materialsController.addSteelDetails}">Lime Rendering</h:commandLink>
+					</div>
+					<div class="ui-grid-col-2">
+						<h:commandLink action="#{materialsController.addSandDetails}">Group Doors</h:commandLink>
+					</div>
+					<div class="ui-grid-col-2">
+						<h:commandLink action="#{materialsController.addVehicleDetails}">Boulders</h:commandLink>
+					</div>
+					<div class="ui-grid-col-2">
+						<h:commandLink action="#{materialsController.addPowerDetails}">Miscellaneous</h:commandLink>
+					</div>
+				</div>
+			</div>
+		</p:layoutUnit>
+	</p:layout>
+</h:form>
+
+</html>

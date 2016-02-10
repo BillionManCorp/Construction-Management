@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:prime="http://primefaces.org/ui">
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+	<title>Reports</title>
+	<link rel="stylesheet" type="text/css"
+		href="/ConstructionManagement/faces/view/js/styles.css" />
+	<script>
+		
+	</script>
+</h:head>
+<h:body>
+	<div id="container">
+	<div id="header">
+	<ui:include src="/view/secure/header.xhtml"></ui:include>
+	</div>
+	<div id="wrapper">
+	<h:form>
+		<div id="content">
+		<p>
+		<strong>Content here.</strong>
+		</p>
+		<h:panelGrid columns="2" cellpadding="5">
+			<h:outputLabel value="Project: " />
+			<h:selectOneMenu id="project" required="true" onchange="submit()"
+				valueChangeListener="#{reportController.enableMaterial}"
+				value="#{reportController.selectedProject}" style="width:150px">
+				<f:selectItem itemLabel="Select Project" itemValue="0" />
+				<f:selectItems value="#{reportController.projectList}" var="pro"
+					itemLabel="#{pro.projectName}" itemValue="#{pro.id}" />
+			</h:selectOneMenu>
+
+			<h:outputLabel for="materials" value="Materials: " />
+			<h:selectOneMenu id="materials" onchange="submit()"
+				disabled="#{!reportController.material}"
+				valueChangeListener="#{reportController.fetchMaterial}"
+				value="#{reportController.selectedMaterial}" style="width:150px">
+				<f:selectItem itemLabel="Select Material" itemValue="" />
+				<f:selectItems value="#{reportController.materialValues}" />
+			</h:selectOneMenu>
+
+		</h:panelGrid>
+		</div>
+	</h:form>
+	</div>
+	<div id="navigation">
+	<ui:include src="/view/secure/navigate.xhtml"></ui:include>
+	</div>
+	<div id="extra">
+	<p>
+	<h1 style="text-align:center;margin-bottom:-20px;">#{materialsModel.selectedMaterial}</h1>
+	</p>
+	<h:panelGroup rendered="#{reportController.appendPage != null}"
+		id="matTbl">
+		<ui:include src="#{reportController.appendPage}"></ui:include>
+	</h:panelGroup>
+	</div>
+	<!-- <div id="footer">
+	<p>Footer</p>
+	</div> -->
+	</div>
+</h:body>
+</html>

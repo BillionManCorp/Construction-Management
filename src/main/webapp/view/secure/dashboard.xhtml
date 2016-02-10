@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+	<style>
+#container {
+	width: 1000px;
+	background-color: #ffcc33;
+	margin: auto;
+	margin-top: 3cm;
+}
+
+#first {
+	width: 300px;
+	float: left;
+	height: 200px;
+	background-color: navy;
+}
+
+#second {
+	width: 300px;
+	float: left;
+	height: 200px;
+	background-color: #FF6600;
+}
+
+#third {
+	width: 300px;
+	float: left;
+	height: 200px;
+	background-color: #8B008B;
+}
+</style>
+	<title>Dashboard</title>
+	<meta http-equiv="refresh"
+		content="#{facesContext.externalContext.sessionMaxInactiveInterval};url=#{request.contextPath}/view/login.xhtml" />
+</h:head>
+<ui:include src="/view/secure/header.xhtml"></ui:include>
+<h:form id="dashboard">
+	<div id="container">
+		<h:outputLink rendered="#{loginModel.admin}">
+			<div id="first" style="margin-right: 0.75cm;">
+				<h:commandLink action="#{loginController.createProject}">
+					<h2 style="color: white; margin-top: 2cm;" align="center">Create
+						Project</h2>
+				</h:commandLink>
+			</div>
+		</h:outputLink>
+		<div id="second" style="margin-right: 0.75cm;">
+			<h:commandLink action="#{fetchProjectController.fetchProject}">
+				<h2 style="color: white; margin-top: 2cm;" align="center">Projects</h2>
+			</h:commandLink>
+		</div>
+		<div id="third">
+			<h:commandLink action="#{loginController.redirectToMaterials}">
+				<h2 style="color: white; margin-top: 2cm;" align="center">Materials</h2>
+			</h:commandLink>
+		</div>
+		<h:outputLink rendered="#{loginModel.admin}">
+			<div id="third"
+				style="margin-right: 0.75cm; margin-top: 0.75cm; background-color: #FF0000;">
+				<h:commandLink action="#{reportController.redirectToReport}">
+					<h2 style="color: white; margin-top: 2cm;" align="center">Report</h2>
+				</h:commandLink>
+			</div>
+		</h:outputLink>
+
+		<h:outputLink rendered="#{loginModel.admin}">
+			<div id="third"
+				style="margin-right: 0.75cm; margin-top: 0.75cm; background-color: #0000FF;">
+				<h:commandLink action="#{loginController.addUser}">
+					<h2 style="color: white; margin-top: 2cm;" align="center">Add
+						User</h2>
+				</h:commandLink>
+			</div>
+		</h:outputLink>
+
+		<h:outputLink rendered="#{loginModel.admin}">
+			<div id="third"
+				style="margin-right: 0.75cm; margin-top: 0.75cm; background-color: #FFD700;">
+			</div>
+		</h:outputLink>
+	</div>
+	<div></div>
+	<div></div>
+	<div></div>
+</h:form>
+</html>

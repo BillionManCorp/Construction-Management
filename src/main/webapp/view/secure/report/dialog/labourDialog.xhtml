@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+<h:form id="labourDialog">
+	<p:dialog header="Labour Details" widgetVar="dlgLabour" minHeight="40"
+		rendered="#{reportController.selectedLaboursModel != null}"
+		modal="true">
+		<p:panelGrid id="tableData" columns="2" columnClasses="label,value">
+
+			<h:outputText value="#{msg['label.amount']}" />
+			<p:inputText value="#{reportController.selectedLaboursModel.amount}"
+				required="true" />
+			<h:outputText value="#{msg['label.description']}" />
+			<p:inputTextarea maxlength="100"
+				value="#{reportController.selectedLaboursModel.description}"
+				required="true"></p:inputTextarea>
+
+			<h:outputLabel value="#{msg['label.project.name']}"
+				style="font-weight: bold;"></h:outputLabel>
+			<h:selectOneMenu value="#{reportController.selectedProject}">
+				<f:selectItems var="proj" value="#{reportController.projectList}"
+					itemLabel="#{proj.projectName}" itemValue="#{proj.id}"></f:selectItems>
+			</h:selectOneMenu>
+		</p:panelGrid>
+		<div align="center" style="margin-top: 0.5cm;">
+			<p:commandButton action="#{reportController.updateLabour}"
+				update=":report:matTbl" icon="ui-icon-disk">
+			</p:commandButton>
+		</div>
+		<p:messages showDetail="true" showSummary="true"></p:messages>
+	</p:dialog>
+</h:form>
+</html>

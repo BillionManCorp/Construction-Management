@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+	<title>Project view</title>
+</h:head>
+<ui:include src="/view/secure/header.xhtml"></ui:include>
+<h:form id="fetchPage">
+	<p:layout style="min-width:800px;min-height:400px;margin:auto;">
+		<p:layoutUnit position="west" resizable="true" size="100" minSize="40"
+			maxSize="200" style="min-width:240px;">
+			<ui:include src="/view/secure/sideMenu.xhtml"></ui:include>
+		</p:layoutUnit>
+		<p:layoutUnit position="center">
+			<h2 style="color: #000000; font-weight: bolder; font-style: italic;"
+				align="center">Projects</h2>
+			<p:dataTable var="proj" id="projectTable"
+				value="#{fetchProjectController.projectList != null? fetchProjectController.projectList: materialsController.projectList}"
+				style="margin-left:0.5cm;margin-top:1cm;">
+				<p:column headerText="Project Name">
+					<h:outputText value="#{proj.projectName}"></h:outputText>
+				</p:column>
+				<p:column headerText="Place">
+					<h:outputText value="#{proj.place}"></h:outputText>
+				</p:column>
+				<p:column headerText="Estimated Cost">
+					<h:outputText value="#{proj.estimatedCost}"></h:outputText>
+				</p:column>
+				<p:column headerText="Start Date">
+					<h:outputText value="#{proj.startDate}">
+					</h:outputText>
+				</p:column>
+				<p:column headerText="Sector">
+					<h:outputText value="Road" rendered="#{proj.projectType == 1}"></h:outputText>
+					<h:outputText value="Building" rendered="#{proj.projectType == 2}"></h:outputText>
+				</p:column>
+				<p:column>
+					<!-- 					<p:rowEditor> -->
+					<p:commandButton update=":dialog:projectDetail"
+						oncomplete="PF('projectDialog').show()" icon="ui-icon-pencil"
+						title="View">
+						<f:setPropertyActionListener value="#{proj}"
+							target="#{fetchProjectController.selectedProject}" />
+					</p:commandButton>
+					<!-- </p:rowEditor> -->
+				</p:column>
+			</p:dataTable>
+
+			<!-- Dialog Starts -->
+		</p:layoutUnit>
+	</p:layout>
+</h:form>
+<h:form id="dialog">
+	<p:dialog header="Project Edit" widgetVar="projectDialog" modal="true" 
+		appendToBody="false" showEffect="fade" hideEffect="fade"
+		resizable="false">
+		<p:outputPanel id="projectDetail" style="text-align:center;">
+			<p:panelGrid columns="2"
+				rendered="#{not empty fetchProjectController.selectedProject}"
+				columnClasses="label,value">
+
+				<h:outputLabel value="Project Name: " style="font-weight: bold;"></h:outputLabel>
+				<h:inputText
+					value="#{fetchProjectController.selectedProject.projectName}"></h:inputText>
+				<h:outputLabel value="Place: " style="font-weight: bold;"></h:outputLabel>
+				<h:inputText value="#{fetchProjectController.selectedProject.place}"></h:inputText>
+				<h:outputLabel value="Start Date: " style="font-weight: bold;"></h:outputLabel>
+				<p:calendar
+					value="#{fetchProjectController.selectedProject.startDate}"
+					pattern="dd.MM.yyyy" />
+				<h:outputLabel value="Delivered Date: " style="font-weight: bold;"></h:outputLabel>
+				<p:calendar
+					value="#{fetchProjectController.selectedProject.endDate}"
+					pattern="dd.MM.yyyy" />
+				<h:outputLabel value="Prioject Type: " style="font-weight: bold;"></h:outputLabel>
+				<h:selectOneMenu
+					value="#{fetchProjectController.selectedProject.projectType}">
+					<f:selectItem itemValue="1" itemLabel="Road"></f:selectItem>
+					<f:selectItem itemValue="2" itemLabel="Building"></f:selectItem>
+				</h:selectOneMenu>
+				<h:outputLabel value="Cost: " style="font-weight: bold;"></h:outputLabel>
+				<h:inputText
+					value="#{fetchProjectController.selectedProject.estimatedCost}"></h:inputText>
+			</p:panelGrid>
+			<div align="center" style="margin-top: 0.5cm;">
+				<p:commandButton action="#{fetchProjectController.updateProject}" update=":fetchPage:projectTable"
+					icon="ui-icon-disk">
+				</p:commandButton>
+			</div>
+			<p:messages showDetail="true" showSummary="true"></p:messages>
+		</p:outputPanel>
+	</p:dialog>
+</h:form>
+
+</html>
