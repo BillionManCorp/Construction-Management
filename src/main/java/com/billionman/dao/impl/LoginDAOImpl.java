@@ -35,7 +35,7 @@ public class LoginDAOImpl implements LoginDAO {
 		String role = null;
 		try {
 			Query query = session
-					.createQuery("from User u where u.userName=:name and u.password=:psw");
+					.createQuery("from User u where u.userName=:name and u.password=:psw");session.isDirty();
 			query.setParameter("name", userName);
 			query.setParameter("psw", password);
 			if (CollectionUtils.isEmpty(query.list())) {
