@@ -4,47 +4,115 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:p="http://primefaces.org/ui"
-	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:a4j="http://richfaces.org/a4j"
-	xmlns:rich="http://richfaces.org/rich">
-<h:head>
-	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
-</h:head>
-	<rich:inplaceInput value="dadsadasd"></rich:inplaceInput>
-	<a4j:commandLink value="dasdasdasdasdasdsa"></a4j:commandLink>
-	<rich:dataTable id="tblCement" iterationStatusVar="cement"
-		rendered="#{materialsModel.selectedMaterial=='CEMENT'}"
-		value="#{cementEditDeleteController.cementList}" rows="20"
-		style="margin-bottom:20px;min-width:400px;">
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+	<h:head>
+		<meta http-equiv="Content-Type"
+			content="text/html; charset=ISO-8859-1" />
+		<style>
+#overlay {
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	background: #999;
+	width: 100%;
+	height: 100%;
+	opacity: 0.8;
+	z-index: 100;
+}
 
-		<rich:column>
-			<f:facet name="header">
-				<h:outputText value="#{msg['label.quantity.bags']}" />
-			</f:facet>
-			<h:outputText value="#{cement.numberBags}" />
-		</rich:column>
+#popup {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	background: #fff;
+	width: 500px;
+	height: 300px;
+	margin-left: -250px; /*Half the value of width to center div*/
+	margin-top: -250px; /*Half the value of height to center div*/
+	z-index: 200;
+}
+</style>
+	</h:head>
+	<h:form>
+		<h1 style="text-align: center;">#{materialsModel.selectedMaterial}</h1>
+		<p:dataTable id="tblCement" var="cement"
+			rendered="#{materialsModel.selectedMaterial=='CEMENT'}"
+			value="#{cementEditDeleteController.cementList}" rows="20"
+			style="margin-bottom:20px;min-width:400px;">
 
-		<rich:column>
-			<f:facet name="header">
-				<h:outputText value="#{msg['label.amount']}" />
-			</f:facet>
-			<h:outputText value="#{cement.amount}" />
-		</rich:column>
+			<p:column>
+				<f:facet name="header">
+					<h:outputText value="#{msg['label.quantity.bags']}" />
+				</f:facet>
+				<h:outputText value="#{cement.numberBags}" />
+			</p:column>
 
-		<rich:column>
-			<f:facet name="header">
-				<h:outputText value="#{msg['label.date']}" />
-			</f:facet>
-			<h:outputText value="#{cement.addedDate}" />
-		</rich:column>
+			<p:column>
+				<f:facet name="header">
+					<h:outputText value="#{msg['label.amount']}" />
+				</f:facet>
+				<h:outputText value="#{cement.amount}" />
+			</p:column>
 
-		<rich:column>
-			<f:facet name="header">
-				<h:outputText value="Edit/Delete" />
+			<p:column>
+				<f:facet name="header">
+					<h:outputText value="#{msg['label.date']}" />
+				</f:facet>
+				<h:outputText value="#{cement.addedDate}" />
+			</p:column>
+
+			<p:column>
+				<f:facet name="header">
+					<h:outputText value="Edit/Delete &#160;" />
+					<h:commandLink action="#{cementEditDeleteController.addCement}"><h:graphicImage library="images" name="plus-symbol.png" width="25px" height="20px" onmouseover="Add New"></h:graphicImage></h:commandLink>
+					<h:outputText value="&#160;" />
+				</f:facet>
 				<h:outputText value="&#160;" />
-				<p:commandButton icon="ui-icon-plus"
-					action="#{materialsController.addCementDetails}"></p:commandButton>
-			</f:facet>
-			
-		</rich:column></rich:dataTable>
+				<h:outputText value="&#160;" />
+				<h:commandLink value="Edit" style="color:blue;"
+					action="#{cementEditDeleteController.editCement}">
+					<f:setPropertyActionListener value="#{cement}"
+						target="#{cementEditDeleteController.selectedCementModel}" />
+				</h:commandLink>
+				<h:outputText value="&#160;" />
+				<h:outputText value="&#160;" />
+				<h:commandLink value="Delete" action="#{cementEditDeleteController.deleteCement}" style="color:red;" >
+					<f:setPropertyActionListener value="#{cement}"
+						target="#{cementEditDeleteController.selectedCementModel}" />
+				</h:commandLink>
+			</p:column>
+		</p:dataTable>
+		<h:panelGroup
+		rendered="#{cementEditDeleteController.selectedCementModel != null}">
+		<div id="overlay"></div>
+		<div id="popup" style="z-index: 10000;">
+			<div align="center" style="margin-top: 30px;">
+				<h1 style="text-align: center;">#{materialsModel.selectedMaterial}</h1>
+				<h:panelGrid columns="2" layout="grid"
+					style="width:400px;height:200px;">
+
+					<h:outputText value="Quantity(in Bags):" />
+					<p:inputText value="#{cementEditDeleteController.selectedCementModel.numberBags}"></p:inputText>
+
+					<h:outputText value="Amount(in Rs):" />
+					<p:inputText value="#{cementEditDeleteController.selectedCementModel.amount}" />
+
+					<h:outputText value="Project:" />
+					<h:selectOneMenu value="#{cementEditDeleteController.selectedCementModel.projId}">
+						<f:selectItems value="#{cementEditDeleteController.projectList}"
+							var="pro" itemLabel="#{pro.projectName}" itemValue="#{pro.id}">
+						</f:selectItems>
+					</h:selectOneMenu>
+				</h:panelGrid>
+				<h:panelGrid columns="3">
+				<h:commandButton value="Save" id="save"
+						action="#{cementEditDeleteController.updateCement}" />
+					<h:commandButton value="Cancel" action="#{cementEditDeleteController.cancelEdit}" id="cancel" />
+				</h:panelGrid>
+			</div>
+		</div>
+	</h:panelGroup>
+	</h:form>
 </ui:composition>

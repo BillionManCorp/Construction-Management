@@ -31,6 +31,7 @@ public class MaterialsModel implements Serializable {
 	private String appendDialogPage;
 	private boolean material;
 	private int editingIndex;
+	private boolean showPopUp;
 
 	/**
 	 * 
@@ -140,12 +141,33 @@ public class MaterialsModel implements Serializable {
 		return editingIndex;
 	}
 
+	public static void main(String[] args) {
+
+        System.out.println("This is a String");
+
+    }
+	
 	/**
 	 * @param editingIndex
 	 *            the editingIndex to set
 	 */
 	public void setEditingIndex(int editingIndex) {
 		this.editingIndex = editingIndex;
+	}
+
+	/**
+	 * @return the showPopUp
+	 */
+	public boolean isShowPopUp() {
+		return showPopUp;
+	}
+
+	/**
+	 * @param showPopUp
+	 *            the showPopUp to set
+	 */
+	public void setShowPopUp(boolean showPopUp) {
+		this.showPopUp = showPopUp;
 	}
 
 }

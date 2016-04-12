@@ -32,6 +32,7 @@ import com.billionman.controller.helper.JellyModel;
 import com.billionman.controller.helper.LaboursModel;
 import com.billionman.controller.helper.LimeModel;
 import com.billionman.controller.helper.SteelModelBean;
+import com.billionman.controller.materialscontroller.BricksController;
 import com.billionman.controller.materialscontroller.CementEditDeleteController;
 import com.billionman.controller.materialscontroller.MaterialsModel;
 import com.billionman.model.Project;
@@ -78,6 +79,8 @@ public class ReportController implements Serializable {
 	private MaterialsModel materialsModel;
 	@ManagedProperty(value = "#{cementEditDeleteController}")
 	private CementEditDeleteController cementEditDeleteController;
+	@ManagedProperty(value = "#{bricksController}")
+	private BricksController bricksController;
 
 	private Collection<SteelModelBean> steelList;
 	private Collection<CementModel> cementList;
@@ -105,8 +108,7 @@ public class ReportController implements Serializable {
 
 	public String redirectToReport() {
 		// setMaterialsModel(new MaterialsModel());
-		System.out.println("getModelBean: " + getMaterialsModel() + " "
-				+ this.materialsModel);
+		System.out.println("getModelBean: " + getMaterialsModel() + " " + this.materialsModel);
 		clear();
 		setProjectList(new ArrayList<Project>());
 		getProjectList().addAll(createProjectService.fetchProjects());
@@ -142,8 +144,7 @@ public class ReportController implements Serializable {
 	public void enableMaterial(ValueChangeEvent e) {
 		if (e.getNewValue() != Integer.valueOf(0)) {
 			setMaterial(true);
-			if (getSelectedMaterial() != null
-					&& !getSelectedMaterial().isEmpty()) {
+			if (getSelectedMaterial() != null && !getSelectedMaterial().isEmpty()) {
 				setSelectedProject(Integer.parseInt(e.getNewValue().toString()));
 				filterMaterial(getSelectedMaterial());
 			}
@@ -158,8 +159,8 @@ public class ReportController implements Serializable {
 	}
 
 	private void filterMaterial(String val) {
-		HttpServletRequest request = (HttpServletRequest) FacesContext
-				.getCurrentInstance().getExternalContext().getRequest();
+		HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext()
+				.getRequest();
 		setModelBeanObject(request, val);
 		switch (Materials.getEnumForValue(val)) {
 		case BOULDERS:
@@ -168,8 +169,7 @@ public class ReportController implements Serializable {
 			getMaterialsModel().setAppendPage(Constants.PATH_BOULDER);
 			break;
 		case BRICKS:
-			fetchBricks(getSelectedProject());
-			setAppendPage(Constants.PATH_BRICK);
+			getBricksController().fetchBricks(getSelectedProject());
 			getMaterialsModel().setAppendPage(Constants.PATH_BRICK);
 			break;
 		case CEMENT:
@@ -256,8 +256,7 @@ public class ReportController implements Serializable {
 	private void setModelBeanObject(HttpServletRequest request, String material) {
 		getMaterialsModel().setProjectList(getProjectList());
 		getMaterialsModel().setSelectedMaterial(material);
-		request.getSession()
-				.setAttribute("materialsModel", getMaterialsModel());
+		request.getSession().setAttribute("materialsModel", getMaterialsModel());
 	}
 
 	public void enterEditMode(ActionEvent a) {
@@ -276,27 +275,22 @@ public class ReportController implements Serializable {
 	private void fetchSteel(int projId) {
 		clearListFields();
 		setSteelList(new ArrayList<SteelModelBean>());
-		getSteelList().addAll(
-				SteelMapper.mapFetchSteel(
-						fetchMaterialsService.fetchSteel(projId),
-						getProjectList(), projId));
+		getSteelList()
+				.addAll(SteelMapper.mapFetchSteel(fetchMaterialsService.fetchSteel(projId), getProjectList(), projId));
 	}
 
 	private void fetchBricks(int projId) {
 		clearListFields();
 		setBricksList(new ArrayList<BricksModel>());
 		getBricksList().addAll(
-				BricksMapper.mapFetchBricks(
-						fetchMaterialsService.fetchBricks(projId),
-						getProjectList(), projId));
+				BricksMapper.mapFetchBricks(fetchMaterialsService.fetchBricks(projId), getProjectList(), projId));
 	}
 
 	public String updateBricks() {
-		String success = updateMaterialsService.updateBricks(BricksMapper
-				.mapUpdateBrick(getBrickDetails(), getSelectedProject(),
-						getProjectList()));
-		FacesMessage message = Constants.SUCCESS.equals(success) ? new FacesMessage(
-				"Successfully saved") : new FacesMessage("Failed Saving");
+		String success = updateMaterialsService
+				.updateBricks(BricksMapper.mapUpdateBrick(getBrickDetails(), getSelectedProject(), getProjectList()));
+		FacesMessage message = Constants.SUCCESS.equals(success) ? new FacesMessage("Successfully saved")
+				: new FacesMessage("Failed Saving");
 		RequestContext.getCurrentInstance().showMessageInDialog(message);
 		clearListFields();
 		setAppendPage(Constants.PATH_BRICK);
@@ -305,11 +299,10 @@ public class ReportController implements Serializable {
 	}
 
 	public String deleteBricks() {
-		String success = deleteMaterialsService.deleteBricks(BricksMapper
-				.mapUpdateBrick(getBrickDetails(), getSelectedProject(),
-						getProjectList()));
-		FacesMessage message = Constants.SUCCESS.equals(success) ? new FacesMessage(
-				"Successfully saved") : new FacesMessage("Failed Saving");
+		String success = deleteMaterialsService
+				.deleteBricks(BricksMapper.mapUpdateBrick(getBrickDetails(), getSelectedProject(), getProjectList()));
+		FacesMessage message = Constants.SUCCESS.equals(success) ? new FacesMessage("Successfully saved")
+				: new FacesMessage("Failed Saving");
 		RequestContext.getCurrentInstance().showMessageInDialog(message);
 		clearListFields();
 		setAppendPage(Constants.PATH_BRICK);
@@ -317,56 +310,13 @@ public class ReportController implements Serializable {
 		return "report";
 	}
 
-	/** Cement Part */
-	public String updateCement() {
-		String success = updateMaterialsService.updateCement(CementMapper
-				.mapUpdateCement(getSelectedCementModel(), getMaterialsModel()
-						.getSelectedProject(), getMaterialsModel()
-						.getProjectList()));
-		FacesMessage message = Constants.SUCCESS.equals(success) ? new FacesMessage(
-				"Successfully saved") : new FacesMessage("Failed Saving");
-		RequestContext.getCurrentInstance().showMessageInDialog(message);
-		clearListFields();
-		setAppendPage(Constants.PATH_CEMENT);
-		fetchCement(getSelectedProject());
-		return "report";
-	}
-
-	public String deleteCement() {
-		String success = deleteMaterialsService.deleteCement(CementMapper
-				.mapUpdateCement(getSelectedCementModel(), getMaterialsModel()
-						.getSelectedProject(), getMaterialsModel()
-						.getProjectList()));
-		FacesMessage message = Constants.SUCCESS.equals(success) ? new FacesMessage(
-				"Successfully saved") : new FacesMessage("Failed Deleting");
-		RequestContext.getCurrentInstance().showMessageInDialog(message);
-		clearListFields();
-		setAppendPage(Constants.PATH_CEMENT);
-		fetchCement(getSelectedProject());
-		return "report";
-	}
-
-	/**
-	 * 
-	 * @param projId
-	 */
-	private void fetchCement(int projId) {
-		getMaterialsModel().clearMaterialsList();
-		setCementList(new ArrayList<CementModel>());
-		this.cementList.clear();
-		this.cementList.addAll(CementMapper.mapFetchCement(
-				fetchMaterialsService.fetchCement(projId), getMaterialsModel()
-						.getProjectList(), projId));
-	}
-
 	/** Boulder */
 	public String updateBoulders() {
-		String success = updateMaterialsService.updateBoulders(BouldersMapper
-				.mapUpdateBoulders(getSelectedBouldersModel(),
-						getMaterialsModel().getSelectedProject(),
-						getMaterialsModel().getProjectList()));
-		FacesMessage message = Constants.SUCCESS.equals(success) ? new FacesMessage(
-				"Successfully saved") : new FacesMessage("Failed Saving");
+		String success = updateMaterialsService
+				.updateBoulders(BouldersMapper.mapUpdateBoulders(getSelectedBouldersModel(),
+						getMaterialsModel().getSelectedProject(), getMaterialsModel().getProjectList()));
+		FacesMessage message = Constants.SUCCESS.equals(success) ? new FacesMessage("Successfully saved")
+				: new FacesMessage("Failed Saving");
 		RequestContext.getCurrentInstance().showMessageInDialog(message);
 		clearListFields();
 		setAppendPage(Constants.PATH_BOULDER);
@@ -375,12 +325,11 @@ public class ReportController implements Serializable {
 	}
 
 	public String deleteBoulders() {
-		String success = deleteMaterialsService.deleteBoulders(BouldersMapper
-				.mapUpdateBoulders(getSelectedBouldersModel(),
-						getMaterialsModel().getSelectedProject(),
-						getMaterialsModel().getProjectList()));
-		FacesMessage message = Constants.SUCCESS.equals(success) ? new FacesMessage(
-				"Successfully saved") : new FacesMessage("Failed Deleting");
+		String success = deleteMaterialsService
+				.deleteBoulders(BouldersMapper.mapUpdateBoulders(getSelectedBouldersModel(),
+						getMaterialsModel().getSelectedProject(), getMaterialsModel().getProjectList()));
+		FacesMessage message = Constants.SUCCESS.equals(success) ? new FacesMessage("Successfully saved")
+				: new FacesMessage("Failed Deleting");
 		RequestContext.getCurrentInstance().showMessageInDialog(message);
 		clearListFields();
 		setAppendPage(Constants.PATH_BOULDER);
@@ -396,19 +345,17 @@ public class ReportController implements Serializable {
 		getMaterialsModel().clearMaterialsList();
 		setBouldersList(new ArrayList<BouldersModel>());
 		this.bouldersList.clear();
-		this.bouldersList.addAll(BouldersMapper.mapFetchBoulders(
-				fetchMaterialsService.fetchBoulders(projId),
+		this.bouldersList.addAll(BouldersMapper.mapFetchBoulders(fetchMaterialsService.fetchBoulders(projId),
 				getMaterialsModel().getProjectList(), projId));
 	}
 
 	/** Centering */
 	public String updateCentering() {
-		String success = updateMaterialsService.updateCentering(CenteringMapper
-				.mapUpdateCentering(getSelectedCenteringModel(),
-						getMaterialsModel().getSelectedProject(),
-						getMaterialsModel().getProjectList()));
-		FacesMessage message = Constants.SUCCESS.equals(success) ? new FacesMessage(
-				"Successfully saved") : new FacesMessage("Failed Saving");
+		String success = updateMaterialsService
+				.updateCentering(CenteringMapper.mapUpdateCentering(getSelectedCenteringModel(),
+						getMaterialsModel().getSelectedProject(), getMaterialsModel().getProjectList()));
+		FacesMessage message = Constants.SUCCESS.equals(success) ? new FacesMessage("Successfully saved")
+				: new FacesMessage("Failed Saving");
 		RequestContext.getCurrentInstance().showMessageInDialog(message);
 		clearListFields();
 		setAppendPage(Constants.PATH_CENTERING);
@@ -417,12 +364,11 @@ public class ReportController implements Serializable {
 	}
 
 	public String deleteCentering() {
-		String success = deleteMaterialsService.deleteCentering(CenteringMapper
-				.mapUpdateCentering(getSelectedCenteringModel(),
-						getMaterialsModel().getSelectedProject(),
-						getMaterialsModel().getProjectList()));
-		FacesMessage message = Constants.SUCCESS.equals(success) ? new FacesMessage(
-				"Successfully saved") : new FacesMessage("Failed Deleting");
+		String success = deleteMaterialsService
+				.deleteCentering(CenteringMapper.mapUpdateCentering(getSelectedCenteringModel(),
+						getMaterialsModel().getSelectedProject(), getMaterialsModel().getProjectList()));
+		FacesMessage message = Constants.SUCCESS.equals(success) ? new FacesMessage("Successfully saved")
+				: new FacesMessage("Failed Deleting");
 		RequestContext.getCurrentInstance().showMessageInDialog(message);
 		clearListFields();
 		setAppendPage(Constants.PATH_CENTERING);
@@ -438,19 +384,16 @@ public class ReportController implements Serializable {
 		getMaterialsModel().clearMaterialsList();
 		setCenteringList(new ArrayList<CenteringModel>());
 		this.centeringList.clear();
-		this.centeringList.addAll(CenteringMapper.mapFetchCentering(
-				fetchMaterialsService.fetchCentering(projId),
+		this.centeringList.addAll(CenteringMapper.mapFetchCentering(fetchMaterialsService.fetchCentering(projId),
 				getMaterialsModel().getProjectList(), projId));
 	}
 
 	/** Group Doors */
 	public String updateDoors() {
-		String success = updateMaterialsService.updateDoors(DoorsMapper
-				.mapUpdateDoors(getSelectedDoorsModel(), getMaterialsModel()
-						.getSelectedProject(), getMaterialsModel()
-						.getProjectList()));
-		FacesMessage message = Constants.SUCCESS.equals(success) ? new FacesMessage(
-				"Successfully saved") : new FacesMessage("Failed Saving");
+		String success = updateMaterialsService.updateDoors(DoorsMapper.mapUpdateDoors(getSelectedDoorsModel(),
+				getMaterialsModel().getSelectedProject(), getMaterialsModel().getProjectList()));
+		FacesMessage message = Constants.SUCCESS.equals(success) ? new FacesMessage("Successfully saved")
+				: new FacesMessage("Failed Saving");
 		RequestContext.getCurrentInstance().showMessageInDialog(message);
 		clearListFields();
 		setAppendPage(Constants.PATH_DOORS);
@@ -459,12 +402,10 @@ public class ReportController implements Serializable {
 	}
 
 	public String deleteDoors() {
-		String success = deleteMaterialsService.deleteDoors(DoorsMapper
-				.mapUpdateDoors(getSelectedDoorsModel(), getMaterialsModel()
-						.getSelectedProject(), getMaterialsModel()
-						.getProjectList()));
-		FacesMessage message = Constants.SUCCESS.equals(success) ? new FacesMessage(
-				"Successfully saved") : new FacesMessage("Failed Deleting");
+		String success = deleteMaterialsService.deleteDoors(DoorsMapper.mapUpdateDoors(getSelectedDoorsModel(),
+				getMaterialsModel().getSelectedProject(), getMaterialsModel().getProjectList()));
+		FacesMessage message = Constants.SUCCESS.equals(success) ? new FacesMessage("Successfully saved")
+				: new FacesMessage("Failed Deleting");
 		RequestContext.getCurrentInstance().showMessageInDialog(message);
 		clearListFields();
 		setAppendPage(Constants.PATH_DOORS);
@@ -480,19 +421,16 @@ public class ReportController implements Serializable {
 		getMaterialsModel().clearMaterialsList();
 		setDoorsList(new ArrayList<DoorsModel>());
 		this.doorsList.clear();
-		this.doorsList.addAll(DoorsMapper.mapFetchDoors(
-				fetchMaterialsService.fetchGroupDoors(projId),
+		this.doorsList.addAll(DoorsMapper.mapFetchDoors(fetchMaterialsService.fetchGroupDoors(projId),
 				getMaterialsModel().getProjectList(), projId));
 	}
 
 	/** Grill */
 	public String updateGrill() {
-		String success = updateMaterialsService.updateGrill(GrillMapper
-				.mapUpdateGrill(getSelectedGrillModel(), getMaterialsModel()
-						.getSelectedProject(), getMaterialsModel()
-						.getProjectList()));
-		FacesMessage message = Constants.SUCCESS.equals(success) ? new FacesMessage(
-				"Successfully saved") : new FacesMessage("Failed Saving");
+		String success = updateMaterialsService.updateGrill(GrillMapper.mapUpdateGrill(getSelectedGrillModel(),
+				getMaterialsModel().getSelectedProject(), getMaterialsModel().getProjectList()));
+		FacesMessage message = Constants.SUCCESS.equals(success) ? new FacesMessage("Successfully saved")
+				: new FacesMessage("Failed Saving");
 		RequestContext.getCurrentInstance().showMessageInDialog(message);
 		clearListFields();
 		setAppendPage(Constants.PATH_GRILL);
@@ -501,12 +439,10 @@ public class ReportController implements Serializable {
 	}
 
 	public String deleteGrill() {
-		String success = deleteMaterialsService.deleteGrill(GrillMapper
-				.mapUpdateGrill(getSelectedGrillModel(), getMaterialsModel()
-						.getSelectedProject(), getMaterialsModel()
-						.getProjectList()));
-		FacesMessage message = Constants.SUCCESS.equals(success) ? new FacesMessage(
-				"Successfully saved") : new FacesMessage("Failed Deleting");
+		String success = deleteMaterialsService.deleteGrill(GrillMapper.mapUpdateGrill(getSelectedGrillModel(),
+				getMaterialsModel().getSelectedProject(), getMaterialsModel().getProjectList()));
+		FacesMessage message = Constants.SUCCESS.equals(success) ? new FacesMessage("Successfully saved")
+				: new FacesMessage("Failed Deleting");
 		RequestContext.getCurrentInstance().showMessageInDialog(message);
 		clearListFields();
 		setAppendPage(Constants.PATH_GRILL);
@@ -522,19 +458,16 @@ public class ReportController implements Serializable {
 		getMaterialsModel().clearMaterialsList();
 		setGrillList(new ArrayList<GrillModel>());
 		this.grillList.clear();
-		this.grillList.addAll(GrillMapper.mapFetchGrill(fetchMaterialsService
-				.fetchGrill(projId), getMaterialsModel().getProjectList(),
-				projId));
+		this.grillList.addAll(GrillMapper.mapFetchGrill(fetchMaterialsService.fetchGrill(projId),
+				getMaterialsModel().getProjectList(), projId));
 	}
 
 	/** Jelly */
 	public String updateJelly() {
-		String success = updateMaterialsService.updateJelly(JellyMapper
-				.mapUpdateJelly(getSelectedJellyModel(), getMaterialsModel()
-						.getSelectedProject(), getMaterialsModel()
-						.getProjectList()));
-		FacesMessage message = Constants.SUCCESS.equals(success) ? new FacesMessage(
-				"Successfully saved") : new FacesMessage("Failed Saving");
+		String success = updateMaterialsService.updateJelly(JellyMapper.mapUpdateJelly(getSelectedJellyModel(),
+				getMaterialsModel().getSelectedProject(), getMaterialsModel().getProjectList()));
+		FacesMessage message = Constants.SUCCESS.equals(success) ? new FacesMessage("Successfully saved")
+				: new FacesMessage("Failed Saving");
 		RequestContext.getCurrentInstance().showMessageInDialog(message);
 		clearListFields();
 		setAppendPage(Constants.PATH_JELLY);
@@ -543,12 +476,10 @@ public class ReportController implements Serializable {
 	}
 
 	public String deleteJelly() {
-		String success = deleteMaterialsService.deleteJelly(JellyMapper
-				.mapUpdateJelly(getSelectedJellyModel(), getMaterialsModel()
-						.getSelectedProject(), getMaterialsModel()
-						.getProjectList()));
-		FacesMessage message = Constants.SUCCESS.equals(success) ? new FacesMessage(
-				"Successfully saved") : new FacesMessage("Failed Deleting");
+		String success = deleteMaterialsService.deleteJelly(JellyMapper.mapUpdateJelly(getSelectedJellyModel(),
+				getMaterialsModel().getSelectedProject(), getMaterialsModel().getProjectList()));
+		FacesMessage message = Constants.SUCCESS.equals(success) ? new FacesMessage("Successfully saved")
+				: new FacesMessage("Failed Deleting");
 		RequestContext.getCurrentInstance().showMessageInDialog(message);
 		clearListFields();
 		setAppendPage(Constants.PATH_JELLY);
@@ -564,19 +495,16 @@ public class ReportController implements Serializable {
 		getMaterialsModel().clearMaterialsList();
 		setJellyList(new ArrayList<JellyModel>());
 		this.jellyList.clear();
-		this.jellyList.addAll(JellyMapper.mapFetchJelly(fetchMaterialsService
-				.fetchJelly(projId), getMaterialsModel().getProjectList(),
-				projId));
+		this.jellyList.addAll(JellyMapper.mapFetchJelly(fetchMaterialsService.fetchJelly(projId),
+				getMaterialsModel().getProjectList(), projId));
 	}
 
 	/** Labours */
 	public String updateLabours() {
-		String success = updateMaterialsService.updateLabours(LaboursMapper
-				.mapUpdateLabour(getSelectedLaboursModel(), getMaterialsModel()
-						.getSelectedProject(), getMaterialsModel()
-						.getProjectList()));
-		FacesMessage message = Constants.SUCCESS.equals(success) ? new FacesMessage(
-				"Successfully saved") : new FacesMessage("Failed Saving");
+		String success = updateMaterialsService.updateLabours(LaboursMapper.mapUpdateLabour(getSelectedLaboursModel(),
+				getMaterialsModel().getSelectedProject(), getMaterialsModel().getProjectList()));
+		FacesMessage message = Constants.SUCCESS.equals(success) ? new FacesMessage("Successfully saved")
+				: new FacesMessage("Failed Saving");
 		RequestContext.getCurrentInstance().showMessageInDialog(message);
 		clearListFields();
 		setAppendPage(Constants.PATH_LABOURS);
@@ -585,12 +513,10 @@ public class ReportController implements Serializable {
 	}
 
 	public String deleteLabours() {
-		String success = deleteMaterialsService.deleteLabours(LaboursMapper
-				.mapUpdateLabour(getSelectedLaboursModel(), getMaterialsModel()
-						.getSelectedProject(), getMaterialsModel()
-						.getProjectList()));
-		FacesMessage message = Constants.SUCCESS.equals(success) ? new FacesMessage(
-				"Successfully saved") : new FacesMessage("Failed Deleting");
+		String success = deleteMaterialsService.deleteLabours(LaboursMapper.mapUpdateLabour(getSelectedLaboursModel(),
+				getMaterialsModel().getSelectedProject(), getMaterialsModel().getProjectList()));
+		FacesMessage message = Constants.SUCCESS.equals(success) ? new FacesMessage("Successfully saved")
+				: new FacesMessage("Failed Deleting");
 		RequestContext.getCurrentInstance().showMessageInDialog(message);
 		clearListFields();
 		setAppendPage(Constants.PATH_LABOURS);
@@ -606,19 +532,16 @@ public class ReportController implements Serializable {
 		getMaterialsModel().clearMaterialsList();
 		setLaboursList(new ArrayList<LaboursModel>());
 		this.laboursList.clear();
-		this.laboursList.addAll(LaboursMapper.mapFetchLabour(
-				fetchMaterialsService.fetchLabours(projId), getMaterialsModel()
-						.getProjectList(), projId));
+		this.laboursList.addAll(LaboursMapper.mapFetchLabour(fetchMaterialsService.fetchLabours(projId),
+				getMaterialsModel().getProjectList(), projId));
 	}
 
 	/** Lime Rendering */
 	public String updateLimeRendering() {
-		String success = updateMaterialsService.updateLime(LimeMapper
-				.mapUpdateLime(getSelectedLimeModel(), getMaterialsModel()
-						.getSelectedProject(), getMaterialsModel()
-						.getProjectList()));
-		FacesMessage message = Constants.SUCCESS.equals(success) ? new FacesMessage(
-				"Successfully saved") : new FacesMessage("Failed Saving");
+		String success = updateMaterialsService.updateLime(LimeMapper.mapUpdateLime(getSelectedLimeModel(),
+				getMaterialsModel().getSelectedProject(), getMaterialsModel().getProjectList()));
+		FacesMessage message = Constants.SUCCESS.equals(success) ? new FacesMessage("Successfully saved")
+				: new FacesMessage("Failed Saving");
 		RequestContext.getCurrentInstance().showMessageInDialog(message);
 		clearListFields();
 		setAppendPage(Constants.PATH_LIME);
@@ -627,12 +550,10 @@ public class ReportController implements Serializable {
 	}
 
 	public String deleteLimeRendering() {
-		String success = deleteMaterialsService.deleteLime(LimeMapper
-				.mapUpdateLime(getSelectedLimeModel(), getMaterialsModel()
-						.getSelectedProject(), getMaterialsModel()
-						.getProjectList()));
-		FacesMessage message = Constants.SUCCESS.equals(success) ? new FacesMessage(
-				"Successfully saved") : new FacesMessage("Failed Deleting");
+		String success = deleteMaterialsService.deleteLime(LimeMapper.mapUpdateLime(getSelectedLimeModel(),
+				getMaterialsModel().getSelectedProject(), getMaterialsModel().getProjectList()));
+		FacesMessage message = Constants.SUCCESS.equals(success) ? new FacesMessage("Successfully saved")
+				: new FacesMessage("Failed Deleting");
 		RequestContext.getCurrentInstance().showMessageInDialog(message);
 		clearListFields();
 		setAppendPage(Constants.PATH_LIME);
@@ -640,27 +561,12 @@ public class ReportController implements Serializable {
 		return "report";
 	}
 
-	/**
-	 * 
-	 * @param projId
-	 */
-	private void fetchLimeRendering(int projId) {
-		getMaterialsModel().clearMaterialsList();
-		setLaboursList(new ArrayList<LaboursModel>());
-		this.limeList.clear();
-		this.limeList.addAll(LimeMapper.mapFetchLime(fetchMaterialsService
-				.fetchLime(projId), getMaterialsModel().getProjectList(),
-				projId));
-	}
-
 	/** Painting */
 	public String updatePainting() {
-		String success = updateMaterialsService.updateLime(LimeMapper
-				.mapUpdateLime(getSelectedLimeModel(), getMaterialsModel()
-						.getSelectedProject(), getMaterialsModel()
-						.getProjectList()));
-		FacesMessage message = Constants.SUCCESS.equals(success) ? new FacesMessage(
-				"Successfully saved") : new FacesMessage("Failed Saving");
+		String success = updateMaterialsService.updateLime(LimeMapper.mapUpdateLime(getSelectedLimeModel(),
+				getMaterialsModel().getSelectedProject(), getMaterialsModel().getProjectList()));
+		FacesMessage message = Constants.SUCCESS.equals(success) ? new FacesMessage("Successfully saved")
+				: new FacesMessage("Failed Saving");
 		RequestContext.getCurrentInstance().showMessageInDialog(message);
 		clearListFields();
 		setAppendPage(Constants.PATH_LIME);
@@ -669,30 +575,15 @@ public class ReportController implements Serializable {
 	}
 
 	public String deletePainting() {
-		String success = deleteMaterialsService.deleteLime(LimeMapper
-				.mapUpdateLime(getSelectedLimeModel(), getMaterialsModel()
-						.getSelectedProject(), getMaterialsModel()
-						.getProjectList()));
-		FacesMessage message = Constants.SUCCESS.equals(success) ? new FacesMessage(
-				"Successfully saved") : new FacesMessage("Failed Deleting");
+		String success = deleteMaterialsService.deleteLime(LimeMapper.mapUpdateLime(getSelectedLimeModel(),
+				getMaterialsModel().getSelectedProject(), getMaterialsModel().getProjectList()));
+		FacesMessage message = Constants.SUCCESS.equals(success) ? new FacesMessage("Successfully saved")
+				: new FacesMessage("Failed Deleting");
 		RequestContext.getCurrentInstance().showMessageInDialog(message);
 		clearListFields();
 		setAppendPage(Constants.PATH_LIME);
 		fetchGrill(getSelectedProject());
 		return "report";
-	}
-
-	/**
-	 * 
-	 * @param projId
-	 */
-	private void fetchPainting(int projId) {
-		getMaterialsModel().clearMaterialsList();
-		setLaboursList(new ArrayList<LaboursModel>());
-		this.limeList.clear();
-		this.limeList.addAll(LimeMapper.mapFetchLime(fetchMaterialsService
-				.fetchLime(projId), getMaterialsModel().getProjectList(),
-				projId));
 	}
 
 	private void clearListFields() {
@@ -1106,8 +997,7 @@ public class ReportController implements Serializable {
 	 * @param createProjectService
 	 *            the createProjectService to set
 	 */
-	public void setCreateProjectService(
-			CreateProjectService createProjectService) {
+	public void setCreateProjectService(CreateProjectService createProjectService) {
 		this.createProjectService = createProjectService;
 	}
 
@@ -1122,8 +1012,7 @@ public class ReportController implements Serializable {
 	 * @param fetchMaterialsService
 	 *            the fetchMaterialsService to set
 	 */
-	public void setFetchMaterialsService(
-			FetchMaterialsService fetchMaterialsService) {
+	public void setFetchMaterialsService(FetchMaterialsService fetchMaterialsService) {
 		this.fetchMaterialsService = fetchMaterialsService;
 	}
 
@@ -1138,8 +1027,7 @@ public class ReportController implements Serializable {
 	 * @param deleteMaterialsService
 	 *            the deleteMaterialsService to set
 	 */
-	public void setDeleteMaterialsService(
-			DeleteMaterialsService deleteMaterialsService) {
+	public void setDeleteMaterialsService(DeleteMaterialsService deleteMaterialsService) {
 		this.deleteMaterialsService = deleteMaterialsService;
 	}
 
@@ -1154,8 +1042,7 @@ public class ReportController implements Serializable {
 	 * @param updateMaterialsService
 	 *            the updateMaterialsService to set
 	 */
-	public void setUpdateMaterialsService(
-			UpdateMaterialsService updateMaterialsService) {
+	public void setUpdateMaterialsService(UpdateMaterialsService updateMaterialsService) {
 		this.updateMaterialsService = updateMaterialsService;
 	}
 
@@ -1167,11 +1054,26 @@ public class ReportController implements Serializable {
 	}
 
 	/**
-	 * @param cementEditDeleteController the cementEditDeleteController to set
+	 * @param cementEditDeleteController
+	 *            the cementEditDeleteController to set
 	 */
-	public void setCementEditDeleteController(
-			CementEditDeleteController cementEditDeleteController) {
+	public void setCementEditDeleteController(CementEditDeleteController cementEditDeleteController) {
 		this.cementEditDeleteController = cementEditDeleteController;
+	}
+
+	/**
+	 * @return the bricksController
+	 */
+	public BricksController getBricksController() {
+		return bricksController;
+	}
+
+	/**
+	 * @param bricksController
+	 *            the bricksController to set
+	 */
+	public void setBricksController(BricksController bricksController) {
+		this.bricksController = bricksController;
 	}
 
 }

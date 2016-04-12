@@ -33,6 +33,7 @@ public class CementMapper extends ProjectMapper {
 			cementModelBean.setNumberBags(cement.getNumberBags());
 			cementModelBean.setProjectName(projName);
 			cementModelBean.setCementId(cement.getCementId());
+			cementModelBean.setProjId(projId);
 			cementModelBeans.add(cementModelBean);
 		}
 		return cementModelBeans;

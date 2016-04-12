@@ -58,6 +58,9 @@ public class CementEditDeleteController implements Serializable {
 	private int selectedProject;
 
 	public String updateCement() {
+		if(getSelectedCementModel().getCementId() == 0) {
+			return saveCement();
+		}
 		String success = updateMaterialsService.updateCement(CementMapper
 				.mapUpdateCement(getSelectedCementModel(), getMaterialsModel()
 						.getSelectedProject(), getMaterialsModel()
@@ -66,6 +69,33 @@ public class CementEditDeleteController implements Serializable {
 				"Successfully saved") : new FacesMessage("Failed Saving");
 		RequestContext.getCurrentInstance().showMessageInDialog(message);
 		clearAndFetchCement();
+		return "report";
+	}
+	
+	public String saveCement() {
+		String success = createProjectService.saveCementDetails(CementMapper
+				.mapUpdateCement(getSelectedCementModel(), getMaterialsModel()
+						.getSelectedProject(), getMaterialsModel()
+						.getProjectList()));
+		FacesMessage message = Constants.SUCCESS.equals(success) ? new FacesMessage(
+				"Successfully saved") : new FacesMessage("Failed Saving");
+		RequestContext.getCurrentInstance().showMessageInDialog(message);
+		clearAndFetchCement();
+		return "report";
+	}
+	
+	public String editCement() {
+		return "";
+	}
+	
+	public String addCement() {
+		setSelectedCementModel(new CementModel());
+		getSelectedCementModel().setProjId(getMaterialsModel().getSelectedProject());
+		return "";
+	}
+	
+	public String cancelEdit() {
+		setSelectedCementModel(null);
 		return "report";
 	}
 
@@ -110,6 +140,7 @@ public class CementEditDeleteController implements Serializable {
 	private void clearAndFetchCement() {
 		getMaterialsModel().clearMaterialsList();
 		getMaterialsModel().setAppendPage(Constants.PATH_CEMENT);
+		setSelectedCementModel(null);
 		fetchCement(getMaterialsModel().getSelectedProject());
 	}
 
@@ -136,7 +167,6 @@ public class CementEditDeleteController implements Serializable {
 	 * @return the cementList
 	 */
 	public Collection<CementModel> getCementList() {
-		clearAndFetchCement();
 		return cementList;
 	}
 

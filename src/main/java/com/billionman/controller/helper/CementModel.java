@@ -23,6 +23,7 @@ public class CementModel implements Serializable {
 	private BigDecimal amount;
 	private Date addedDate;
 	private String projectName;
+	private int projId;
 
 	/**
 	 * 
@@ -106,4 +107,12 @@ public class CementModel implements Serializable {
 		this.projectName = projectName;
 	}
 
+	public int getProjId() {
+		return projId;
+	}
+
+	public void setProjId(int projId) {
+		this.projId = projId;
+	}
+	
 }

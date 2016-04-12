@@ -36,6 +36,7 @@ public class BricksMapper extends ProjectMapper {
 			bricksModelBean.setBricksId(bricks.getBricksId());
 			bricksModelBean.setQuantity(bricks.getQuantity());
 			bricksModelBean.setProject(projName);
+			bricksModelBean.setProjId(projId);
 			cementModelBeans.add(bricksModelBean);
 		}
 		return cementModelBeans;

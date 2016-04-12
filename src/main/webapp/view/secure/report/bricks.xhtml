@@ -6,50 +6,130 @@
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:ui="http://java.sun.com/jsf/facelets">
 <h:head>
+	<style>
+#overlay {
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	background: #999;
+	width: 100%;
+	height: 100%;
+	opacity: 0.8;
+	z-index: 100;
+}
+
+#popup {
+	position: relative;
+	top: 50%;
+	left: 50%;
+	background: #fff;
+	width: 500px;
+	height: 300px;
+	margin-left: -250px; /*Half the value of width to center div*/
+	margin-top: -250px; /*Half the value of height to center div*/
+	z-index: 200;
+}
+#projects {
+	position: relative;
+	top: 50%;
+	left: 50%;
+	background: #fff;
+	width: 500px;
+	height: 300px;
+	margin-left: -250px; /*Half the value of width to center div*/
+	margin-top: -250px; /*Half the value of height to center div*/
+	z-index: 240;
+}
+</style>
 </h:head>
-<!-- <h:form id="bricks"> -->
-<p:dataTable id="tbl" var="brick" value="#{reportController.bricksList}"
-	rendered="#{reportController.materialsModel.selectedMaterial=='BRICKS'}"
-	paginator="true" rows="20" style="margin-bottom:20px">
+<h:form>
+	<h1 style="text-align: center;background-color: white;">#{materialsModel.selectedMaterial}</h1>
+	<p:dataTable id="tbl" var="brick"
+		value="#{bricksController.bricksList}"
+		rendered="#{materialsModel.selectedMaterial=='BRICKS'}"
+		paginator="true" rows="20" style="margin-bottom:20px">
 
-	<p:column>
-		<f:facet name="header">
-			<h:outputText value="#{msg['label.quantity.nos']}" />
-		</f:facet>
-		<h:outputText value="#{brick.quantity}" />
-	</p:column>
+		<p:column>
+			<f:facet name="header">
+				<h:outputText value="#{msg['label.quantity.nos']}" />
+			</f:facet>
+			<h:outputText value="#{brick.quantity}" />
+		</p:column>
 
-	<p:column>
-		<f:facet name="header">
-			<h:outputText value="#{msg['label.amount']}" />
-		</f:facet>
-		<h:outputText value="#{brick.amount}" />
-	</p:column>
+		<p:column>
+			<f:facet name="header">
+				<h:outputText value="#{msg['label.amount']}" />
+			</f:facet>
+			<h:outputText value="#{brick.amount}" />
+		</p:column>
 
-	<p:column>
-		<f:facet name="header">
-			<h:outputText value="#{msg['label.date']}" />
-		</f:facet>
-		<h:outputText value="#{brick.addedDate}" />
-	</p:column>
+		<p:column>
+			<f:facet name="header">
+				<h:outputText value="#{msg['label.date']}" />
+			</f:facet>
+			<h:outputText value="#{brick.addedDate}" />
+		</p:column>
 
-	<p:column>
-		<f:facet name="header">
-			<h:outputText value="Edit/Delete" />
+		<p:column>
+			<f:facet name="header">
+				<h:outputText value="Edit/Delete &#160;" />
+				<h:commandLink action="#{bricksController.addBricks}">
+					<h:graphicImage library="images" name="plus-symbol.png"
+						width="25px" height="20px" onmouseover="Add New"></h:graphicImage>
+				</h:commandLink>
+				<h:outputText value="&#160;" />
+			</f:facet>
 			<h:outputText value="&#160;" />
-			<p:commandButton icon="ui-icon-plus"
-				action="#{materialsController.addBrickDetails}"></p:commandButton>
-		</f:facet>
-		<p:commandButton icon="ui-icon-close"
-			action="#{reportController.deleteBricks}">
-			<f:setPropertyActionListener value="#{brick}"
-				target="#{reportController.brickDetails}" />
-		</p:commandButton>
-		<p:commandButton icon="ui-icon-pencil" title="View"
-			update=":bricksDialog:tableData" oncomplete="PF('dlg1').show();">
-			<f:setPropertyActionListener value="#{brick}"
-				target="#{reportController.brickDetails}" />
-		</p:commandButton>
-	</p:column>
-</p:dataTable>
+			<h:outputText value="&#160;" />
+			<h:commandLink value="Edit" style="color:blue;"
+				action="#{bricksController.editBricks}">
+				<f:setPropertyActionListener value="#{brick}"
+					target="#{bricksController.selectedBricksModel}" />
+			</h:commandLink>
+			<h:outputText value="&#160;" />
+			<h:outputText value="&#160;" />
+			<h:commandLink value="Delete"
+				action="#{bricksController.deleteBricks}" style="color:red;">
+				<f:setPropertyActionListener value="#{brick}"
+					target="#{bricksController.selectedBricksModel}" />
+			</h:commandLink>
+		</p:column>
+	</p:dataTable>
+	<h:panelGroup
+		rendered="#{bricksController.selectedBricksModel != null}">
+		<div id="overlay"></div>
+		<div id="popup" style="z-index: 10000;">
+			<div align="center" style="margin-top: 30px;">
+				<h1 style="text-align: center;">#{materialsModel.selectedMaterial}</h1>
+				<h:panelGrid columns="2" layout="grid"
+					style="width:400px;height:200px;">
+
+					<h:outputText value="#{msg['label.quantity.nos']}" />
+					<p:inputText
+						value="#{bricksController.selectedBricksModel.quantity}"
+						required="true"></p:inputText>
+
+					<h:outputText value="#{msg['label.amount']}" />
+					<p:inputText value="#{bricksController.selectedBricksModel.amount}" />
+
+					<h:outputText value="Project:" />
+						<h:selectOneMenu 
+							value="#{bricksController.selectedBricksModel.projId}">
+							<f:selectItems value="#{bricksController.projectList}" var="pro" id="projects"
+								itemLabel="#{pro.projectName}" itemValue="#{pro.id}">
+							</f:selectItems>
+						</h:selectOneMenu>
+				</h:panelGrid>
+				<h:panelGrid columns="3">
+					<h:commandButton value="Save" id="save"
+						action="#{bricksController.updateBricks}" />
+					<h:commandButton value="Cancel"
+						action="#{bricksController.cancelEdit}" id="cancel" />
+				</h:panelGrid>
+			</div>
+		</div>
+	</h:panelGroup>
+</h:form>
 </html>

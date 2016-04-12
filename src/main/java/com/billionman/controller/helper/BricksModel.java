@@ -30,6 +30,7 @@ public class BricksModel implements Serializable {
 	private BigDecimal amount;
 	private Date addedDate;
 	private String project;
+	private int projId;
 
 	/**
 	 * @return the bricksId
@@ -104,6 +105,21 @@ public class BricksModel implements Serializable {
 	 */
 	public void setProject(String project) {
 		this.project = project;
+	}
+
+	/**
+	 * @return the projId
+	 */
+	public int getProjId() {
+		return projId;
+	}
+
+	/**
+	 * @param projId
+	 *            the projId to set
+	 */
+	public void setProjId(int projId) {
+		this.projId = projId;
 	}
 
 }
